@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project basedir="." default="jar" name="jstask">
+
+	<target name="jar">
+		<jar basedir="build/classes"
+			jarfile="build/jstask.jar"
+		/>
+	</target>	
+</project>
