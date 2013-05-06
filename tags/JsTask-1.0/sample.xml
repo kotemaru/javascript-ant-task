@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project basedir="." default="test" name="sample">
+	<taskdef name="js"
+		classname="org.kotemaru.ant.task.JsTask"
+		classpath="build/jstask.jar;lib/js.jar"
+	/>
+	
+	<target name="test">
+		<js>
+			<fileset dir="src" includes="**/*.java" />
+			<param name="prefix" value="^${basedir}/" />
+			
+			<![CDATA[
+			var ite = fileset.iterator();
+			while (ite.hasNext()) {
+				var reg = new RegExp(prefix);
+				var fname = (""+ite.next()).replace(reg,"");
+				task.log(fname);
+			}
+			]]>
+		</js>
+	</target>	
+</project>

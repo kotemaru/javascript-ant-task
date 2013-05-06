@@ -1,0 +1,80 @@
+<html>
+<head>
+<title>JsTask manual</title>
+<style>
+h3 {
+	font-family: arial;
+	color: white;
+	background: #224488;
+}
+h4 {
+	font-family: arial;
+	color: white;
+	background: #4488aa;
+}
+xmp {
+	margin-left: 2em;
+	background: #f0f0f0;
+}
+</style>
+</head>
+<body>
+<h2>Js</h2>
+
+<h3>Description</h3>
+Execute a JavaScript with fileset. 
+<p/>
+The JavaScript engine uses Rhino.
+Therefore, it is necessary to prepare for js.jar separately.
+
+<h3>Parameters</h3>
+
+This task does not have an attribute.
+
+<h3>Parameters specified as nested elements</h3>
+<h4>fileset</h4>
+
+The list of any files.
+<p/>
+The result is handed to a JavaScript as variable name "fileset".<br/>
+The data type is <code>List&lt;File&gt;</code> JAVA instance.
+
+<h4>param</h4>
+
+The parameter to a JavaScript.
+<p/>
+The name just becomes the JavaScript variable name.<br/>
+Ant variable is available for the value of the parameter.
+
+<h3>Examples</h3>
+
+Simple using:
+
+<xmp><project basedir="." default="test" name="sample">
+	<taskdef name="js"
+		classname="org.kotemaru.ant.task.JsTask"
+		classpath="lib/jstask.jar;lib/js.jar"
+	/>
+	
+	<target name="test">
+		<js>
+			<fileset dir="src" includes="**/*.java" />
+			<param name="prefix" value="^${basedir}/" />
+			
+			<![CDATA[
+			var ite = fileset.iterator();
+			while (ite.hasNext()) {
+				var reg = new RegExp(prefix);
+				var fname = (""+ite.next()).replace(reg,"");
+				task.log(fname);
+			}
+			]]>
+		</js>
+	</target>	
+</project>
+</xmp>
+
+
+</body>
+
+</html>
